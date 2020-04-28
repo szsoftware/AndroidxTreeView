@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.sample.R;
+import com.unnamed.b.atv.sample.databinding.FragmentDefaultBinding;
 import com.unnamed.b.atv.sample.holder.IconTreeItemHolder;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -21,9 +22,10 @@ import com.unnamed.b.atv.view.AndroidTreeView;
  * Created by Bogdan Melnychuk on 2/12/15.
  */
 public class FolderStructureFragment extends Fragment {
-    private TextView statusBar;
-    private AndroidTreeView tView;
+    private TextView mStatusBar;
+    private AndroidTreeView mTreeView;
 
+    private FragmentDefaultBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,10 @@ public class FolderStructureFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_default, null, false);
-        ViewGroup containerView = (ViewGroup) rootView.findViewById(R.id.container);
-
-        statusBar = (TextView) rootView.findViewById(R.id.status_bar);
+        binding = FragmentDefaultBinding.inflate(inflater, container, false);
+        View rootView = binding.getRoot();
+        ViewGroup containerView = binding.container;
+        mStatusBar = binding.statusBar;
 
         TreeNode root = TreeNode.root();
         TreeNode computerRoot = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_laptop, "My Computer"));
@@ -62,19 +64,19 @@ public class FolderStructureFragment extends Fragment {
 
         root.addChildren(computerRoot);
 
-        tView = new AndroidTreeView(getActivity(), root);
-        tView.setDefaultAnimation(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
-        tView.setDefaultViewHolder(IconTreeItemHolder.class);
-        tView.setDefaultNodeClickListener(nodeClickListener);
-        tView.setDefaultNodeLongClickListener(nodeLongClickListener);
+        mTreeView = new AndroidTreeView(getActivity(), root);
+        mTreeView.setDefaultAnimation(true);
+        mTreeView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
+        mTreeView.setDefaultViewHolder(IconTreeItemHolder.class);
+        mTreeView.setDefaultNodeClickListener(nodeClickListener);
+        mTreeView.setDefaultNodeLongClickListener(nodeLongClickListener);
 
-        containerView.addView(tView.getView());
+        containerView.addView(mTreeView.getView());
 
         if (savedInstanceState != null) {
             String state = savedInstanceState.getString("tState");
             if (!TextUtils.isEmpty(state)) {
-                tView.restoreState(state);
+                mTreeView.restoreState(state);
             }
         }
 
@@ -91,11 +93,11 @@ public class FolderStructureFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.expandAll:
-                tView.expandAll();
+                mTreeView.expandAll();
                 break;
 
             case R.id.collapseAll:
-                tView.collapseAll();
+                mTreeView.collapseAll();
                 break;
         }
         return true;
@@ -115,7 +117,7 @@ public class FolderStructureFragment extends Fragment {
         @Override
         public void onClick(TreeNode node, Object value) {
             IconTreeItemHolder.IconTreeItem item = (IconTreeItemHolder.IconTreeItem) value;
-            statusBar.setText("Last clicked: " + item.text);
+            mStatusBar.setText("Last clicked: " + item.text);
         }
     };
 
@@ -131,6 +133,6 @@ public class FolderStructureFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("tState", tView.getSaveState());
+        outState.putString("tState", mTreeView.getSaveState());
     }
 }

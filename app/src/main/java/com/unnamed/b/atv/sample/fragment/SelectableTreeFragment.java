@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.sample.R;
+import com.unnamed.b.atv.sample.databinding.FragmentSelectableNodesBinding;
 import com.unnamed.b.atv.sample.holder.IconTreeItemHolder;
 import com.unnamed.b.atv.sample.holder.ProfileHolder;
 import com.unnamed.b.atv.sample.holder.SelectableHeaderHolder;
@@ -20,55 +21,46 @@ import com.unnamed.b.atv.view.AndroidTreeView;
  * Created by Bogdan Melnychuk on 2/12/15.
  */
 public class SelectableTreeFragment extends Fragment {
-    private AndroidTreeView tView;
-    private boolean selectionModeEnabled = false;
+    private AndroidTreeView mTreeView;
+    private boolean mSelectionModeEnabled = false;
+
+    FragmentSelectableNodesBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_selectable_nodes, null, false);
-        ViewGroup containerView = (ViewGroup) rootView.findViewById(R.id.container);
+        binding = FragmentSelectableNodesBinding.inflate(inflater, container, false);
+        View rootView = binding.getRoot();
+        ViewGroup containerView = binding.container;
+        View selectionModeButton = binding.btnToggleSelection;
 
-        View selectionModeButton = rootView.findViewById(R.id.btn_toggleSelection);
-        selectionModeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectionModeEnabled = !selectionModeEnabled;
-                tView.setSelectionModeEnabled(selectionModeEnabled);
-            }
+        selectionModeButton.setOnClickListener(v -> {
+            mSelectionModeEnabled = !mSelectionModeEnabled;
+            mTreeView.setSelectionModeEnabled(mSelectionModeEnabled);
         });
 
-        View selectAllBtn = rootView.findViewById(R.id.btn_selectAll);
-        selectAllBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!selectionModeEnabled) {
-                    Toast.makeText(getActivity(), "Enable selection mode first", Toast.LENGTH_SHORT).show();
-                }
-                tView.selectAll(true);
+        View selectAllBtn = binding.btnSelectAll;
+        selectAllBtn.setOnClickListener(v -> {
+            if (!mSelectionModeEnabled) {
+                Toast.makeText(getActivity(), "Enable selection mode first", Toast.LENGTH_SHORT).show();
             }
+            mTreeView.selectAll(true);
         });
 
-        View deselectAll = rootView.findViewById(R.id.btn_deselectAll);
-        deselectAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!selectionModeEnabled) {
-                    Toast.makeText(getActivity(), "Enable selection mode first", Toast.LENGTH_SHORT).show();
-                }
-                tView.deselectAll();
+        View deselectAll = binding.btnDeselectAll;
+        deselectAll.setOnClickListener(v -> {
+            if (!mSelectionModeEnabled) {
+                Toast.makeText(getActivity(), "Enable selection mode first", Toast.LENGTH_SHORT).show();
             }
+            mTreeView.deselectAll();
         });
 
-        View check = rootView.findViewById(R.id.btn_checkSelection);
-        check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!selectionModeEnabled) {
-                    Toast.makeText(getActivity(), "Enable selection mode first", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), tView.getSelected().size() + " selected", Toast.LENGTH_SHORT).show();
-                }
+        View check = binding.btnCheckSelection;
+        check.setOnClickListener(v -> {
+            if (!mSelectionModeEnabled) {
+                Toast.makeText(getActivity(), "Enable selection mode first", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), mTreeView.getSelected().size() + " selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -92,14 +84,14 @@ public class SelectableTreeFragment extends Fragment {
 
         root.addChildren(s1, s2);
 
-        tView = new AndroidTreeView(getActivity(), root);
-        tView.setDefaultAnimation(true);
-        containerView.addView(tView.getView());
+        mTreeView = new AndroidTreeView(getActivity(), root);
+        mTreeView.setDefaultAnimation(true);
+        containerView.addView(mTreeView.getView());
 
         if (savedInstanceState != null) {
             String state = savedInstanceState.getString("tState");
             if (!TextUtils.isEmpty(state)) {
-                tView.restoreState(state);
+                mTreeView.restoreState(state);
             }
         }
         return rootView;
@@ -115,6 +107,6 @@ public class SelectableTreeFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("tState", tView.getSaveState());
+        outState.putString("tState", mTreeView.getSaveState());
     }
 }

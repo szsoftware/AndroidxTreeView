@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import com.unnamed.b.atv.sample.R;
+import com.unnamed.b.atv.sample.databinding.ActivitySingleFragmentBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,10 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SingleFragmentActivity extends AppCompatActivity {
     public final static String FRAGMENT_PARAM = "fragment";
 
+    private ActivitySingleFragmentBinding binding;
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_single_fragment);
+        binding = ActivitySingleFragmentBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Bundle b = getIntent().getExtras();
         Class<?> fragmentClass = (Class<?>) b.get(FRAGMENT_PARAM);

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.sample.R;
+import com.unnamed.b.atv.sample.databinding.FragmentDefaultBinding;
 import com.unnamed.b.atv.sample.holder.HeaderHolder;
 import com.unnamed.b.atv.sample.holder.IconTreeItemHolder;
 import com.unnamed.b.atv.sample.holder.PlaceHolderHolder;
@@ -22,11 +23,16 @@ import com.unnamed.b.atv.view.AndroidTreeView;
 public class CustomViewHolderFragment extends Fragment {
     private AndroidTreeView tView;
 
+    private FragmentDefaultBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_default, null, false);
-        final ViewGroup containerView = (ViewGroup) rootView.findViewById(R.id.container);
-        rootView.findViewById(R.id.status_bar).setVisibility(View.GONE);
+
+        binding = FragmentDefaultBinding.inflate(inflater, container, false);
+        final View rootView = binding.getRoot();
+        final ViewGroup containerView = binding.container;
+
+        binding.statusBar.setVisibility(View.GONE);
 
         final TreeNode root = TreeNode.root();
 
@@ -41,6 +47,7 @@ public class CustomViewHolderFragment extends Fragment {
         root.addChildren(myProfile, bruce, barry, clark);
 
         tView = new AndroidTreeView(getActivity(), root);
+        tView.setDefaultAnimation(true);
         tView.setDefaultAnimation(true);
         tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
         containerView.addView(tView.getView());

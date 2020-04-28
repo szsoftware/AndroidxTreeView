@@ -3,12 +3,10 @@ package com.unnamed.b.atv.sample.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.unnamed.b.atv.sample.R;
+import com.unnamed.b.atv.sample.databinding.ActivityMainBinding;
 import com.unnamed.b.atv.sample.fragment.CustomViewHolderFragment;
 import com.unnamed.b.atv.sample.fragment.FolderStructureFragment;
 import com.unnamed.b.atv.sample.fragment.SelectableTreeFragment;
@@ -24,12 +22,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         final LinkedHashMap<String, Class<?>> listItems = new LinkedHashMap<>();
         listItems.put("Folder Structure Example", FolderStructureFragment.class);
@@ -39,23 +38,20 @@ public class MainActivity extends AppCompatActivity {
         listItems.put("Expand with arrow only", TwoDScrollingArrowExpandFragment.class);
 
 
-        final List<String> list = new ArrayList(listItems.keySet());
-        final ListView listview = (ListView) findViewById(R.id.listview);
+        final List<String> list = new ArrayList<>(listItems.keySet());
+        final ListView listview = binding.listview;
         final SimpleArrayAdapter adapter = new SimpleArrayAdapter(this, list);
         listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Class<?> clazz = listItems.values().toArray(new Class<?>[]{})[position];
-                Intent i = new Intent(MainActivity.this, SingleFragmentActivity.class);
-                i.putExtra(SingleFragmentActivity.FRAGMENT_PARAM, clazz);
-                MainActivity.this.startActivity(i);
-            }
+        listview.setOnItemClickListener((parent, view, position, id) -> {
+            Class<?> clazz = listItems.values().toArray(new Class<?>[]{})[position];
+            Intent i = new Intent(MainActivity.this, SingleFragmentActivity.class);
+            i.putExtra(SingleFragmentActivity.FRAGMENT_PARAM, clazz);
+            MainActivity.this.startActivity(i);
         });
 
     }
 
-    private class SimpleArrayAdapter extends ArrayAdapter<String> {
+    private static class SimpleArrayAdapter extends ArrayAdapter<String> {
         public SimpleArrayAdapter(Context context, List<String> objects) {
             super(context, android.R.layout.simple_list_item_1, objects);
 

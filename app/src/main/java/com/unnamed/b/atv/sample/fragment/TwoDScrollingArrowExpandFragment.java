@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.sample.R;
+import com.unnamed.b.atv.sample.databinding.FragmentSelectableNodesBinding;
 import com.unnamed.b.atv.sample.holder.ArrowExpandSelectableHeaderHolder;
 import com.unnamed.b.atv.sample.holder.IconTreeItemHolder;
 import com.unnamed.b.atv.view.AndroidTreeView;
@@ -19,13 +20,18 @@ import com.unnamed.b.atv.view.AndroidTreeView;
  */
 public class TwoDScrollingArrowExpandFragment extends Fragment implements TreeNode.TreeNodeClickListener{
     private static final String NAME = "Very long name for folder";
-    private AndroidTreeView tView;
+
+    private AndroidTreeView mTreeView;
+
+    private FragmentSelectableNodesBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_selectable_nodes, null, false);
-        rootView.findViewById(R.id.status).setVisibility(View.GONE);
-        ViewGroup containerView = (ViewGroup) rootView.findViewById(R.id.container);
+
+        binding = FragmentSelectableNodesBinding.inflate(inflater, container, false);
+        View rootView = binding.getRoot();
+        binding.status.setVisibility(View.GONE);
+        ViewGroup containerView = binding.container;
 
         TreeNode root = TreeNode.root();
 
@@ -39,21 +45,21 @@ public class TwoDScrollingArrowExpandFragment extends Fragment implements TreeNo
 
         root.addChildren(s1, s2);
 
-        tView = new AndroidTreeView(getActivity(), root);
-        tView.setDefaultAnimation(true);
-        tView.setUse2dScroll(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
-        tView.setDefaultNodeClickListener(TwoDScrollingArrowExpandFragment.this);
-        tView.setDefaultViewHolder(ArrowExpandSelectableHeaderHolder.class);
-        containerView.addView(tView.getView());
-        tView.setUseAutoToggle(false);
+        mTreeView = new AndroidTreeView(getActivity(), root);
+        mTreeView.setDefaultAnimation(true);
+        mTreeView.setUse2dScroll(true);
+        mTreeView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
+        mTreeView.setDefaultNodeClickListener(TwoDScrollingArrowExpandFragment.this);
+        mTreeView.setDefaultViewHolder(ArrowExpandSelectableHeaderHolder.class);
+        containerView.addView(mTreeView.getView());
+        mTreeView.setUseAutoToggle(false);
 
-        tView.expandAll();
+        mTreeView.expandAll();
 
         if (savedInstanceState != null) {
             String state = savedInstanceState.getString("tState");
             if (!TextUtils.isEmpty(state)) {
-                tView.restoreState(state);
+                mTreeView.restoreState(state);
             }
         }
         return rootView;
@@ -71,7 +77,7 @@ public class TwoDScrollingArrowExpandFragment extends Fragment implements TreeNo
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("tState", tView.getSaveState());
+        outState.putString("tState", mTreeView.getSaveState());
     }
 
     @Override

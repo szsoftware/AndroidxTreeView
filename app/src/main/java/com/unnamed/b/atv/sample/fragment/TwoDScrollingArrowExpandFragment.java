@@ -45,12 +45,13 @@ public class TwoDScrollingArrowExpandFragment extends Fragment implements TreeNo
 
         root.addChildren(s1, s2);
 
-        mTreeView = new AndroidTreeView(getActivity(), root);
-        mTreeView.setDefaultAnimation(true);
-        mTreeView.setUse2dScroll(true);
-        mTreeView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
-        mTreeView.setDefaultNodeClickListener(TwoDScrollingArrowExpandFragment.this);
-        mTreeView.setDefaultViewHolder(ArrowExpandSelectableHeaderHolder.class);
+        mTreeView = new AndroidTreeView(getActivity(), root)
+                            .setDefaultAnimation(true)
+                            .setUse2dScroll(true)
+                            .setDefaultContainerStyle(R.style.TreeNodeStyleCustom)
+                            .setDefaultNodeClickListener(TwoDScrollingArrowExpandFragment.this)
+                            .setDefaultViewHolder(ArrowExpandSelectableHeaderHolder.class);
+
         containerView.addView(mTreeView.getView());
         mTreeView.setUseAutoToggle(false);
 

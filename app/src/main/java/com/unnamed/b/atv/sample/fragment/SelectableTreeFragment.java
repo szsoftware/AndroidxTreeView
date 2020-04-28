@@ -84,8 +84,7 @@ public class SelectableTreeFragment extends Fragment {
 
         root.addChildren(s1, s2);
 
-        mTreeView = new AndroidTreeView(getActivity(), root);
-        mTreeView.setDefaultAnimation(true);
+        mTreeView = new AndroidTreeView(getActivity(), root).setDefaultAnimation(true);
         containerView.addView(mTreeView.getView());
 
         if (savedInstanceState != null) {

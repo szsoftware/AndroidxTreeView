@@ -21,7 +21,7 @@ import com.unnamed.b.atv.view.AndroidTreeView;
  * Created by Bogdan Melnychuk on 2/12/15.
  */
 public class CustomViewHolderFragment extends Fragment {
-    private AndroidTreeView tView;
+    private AndroidTreeView mTreeView;
 
     private FragmentDefaultBinding binding;
 
@@ -46,16 +46,16 @@ public class CustomViewHolderFragment extends Fragment {
         addProfileData(barry);
         root.addChildren(myProfile, bruce, barry, clark);
 
-        tView = new AndroidTreeView(getActivity(), root);
-        tView.setDefaultAnimation(true);
-        tView.setDefaultAnimation(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
-        containerView.addView(tView.getView());
+        mTreeView = new AndroidTreeView(getActivity(), root)
+                            .setDefaultAnimation(true)
+                            .setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
+
+        containerView.addView(mTreeView.getView());
 
         if (savedInstanceState != null) {
             String state = savedInstanceState.getString("tState");
             if (!TextUtils.isEmpty(state)) {
-                tView.restoreState(state);
+                mTreeView.restoreState(state);
             }
         }
 
@@ -82,6 +82,6 @@ public class CustomViewHolderFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("tState", tView.getSaveState());
+        outState.putString("tState", mTreeView.getSaveState());
     }
 }

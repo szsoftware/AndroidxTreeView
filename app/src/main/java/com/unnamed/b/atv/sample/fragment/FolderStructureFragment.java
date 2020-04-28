@@ -64,12 +64,12 @@ public class FolderStructureFragment extends Fragment {
 
         root.addChildren(computerRoot);
 
-        mTreeView = new AndroidTreeView(getActivity(), root);
-        mTreeView.setDefaultAnimation(true);
-        mTreeView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
-        mTreeView.setDefaultViewHolder(IconTreeItemHolder.class);
-        mTreeView.setDefaultNodeClickListener(nodeClickListener);
-        mTreeView.setDefaultNodeLongClickListener(nodeLongClickListener);
+        mTreeView = new AndroidTreeView(getActivity(), root)
+                            .setDefaultAnimation(true)
+                            .setDefaultContainerStyle(R.style.TreeNodeStyleCustom)
+                            .setDefaultViewHolder(IconTreeItemHolder.class)
+                            .setDefaultNodeClickListener(nodeClickListener)
+                            .setDefaultNodeLongClickListener(nodeLongClickListener);
 
         containerView.addView(mTreeView.getView());
 

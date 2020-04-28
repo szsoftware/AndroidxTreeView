@@ -33,7 +33,10 @@ public class ProfileHolder extends TreeNode.BaseNodeViewHolder<IconTreeItemHolde
     }
 
     @Override
-    public void toggle(boolean active) {
+    public ProfileHolder toggle(boolean active) {
+        // TODO: ??
+        // empty
+        return this;
     }
 
     @Override

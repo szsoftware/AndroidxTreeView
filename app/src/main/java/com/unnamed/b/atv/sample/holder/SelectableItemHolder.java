@@ -48,8 +48,9 @@ public class SelectableItemHolder extends TreeNode.BaseNodeViewHolder<String> {
 
 
     @Override
-    public void toggleSelectionMode(boolean editModeEnabled) {
+    public SelectableItemHolder toggleSelectionMode(boolean editModeEnabled) {
         nodeSelector.setVisibility(editModeEnabled ? View.VISIBLE : View.GONE);
         nodeSelector.setChecked(mNode.isSelected());
+        return this;
     }
 }

@@ -110,16 +110,18 @@ public class TreeNode {
         return this;
     }
 
-    public void setSelected(boolean selected) {
+    public TreeNode setSelected(boolean selected) {
         mSelected = selected;
+        return this;
     }
 
     public boolean isSelected() {
         return mSelectable && mSelected;
     }
 
-    public void setSelectable(boolean selectable) {
+    public TreeNode setSelectable(boolean selectable) {
         mSelectable = selectable;
+        return this;
     }
 
     public boolean isSelectable() {
@@ -242,16 +244,18 @@ public class TreeNode {
             return mView;
         }
 
-        public void setTreeViev(AndroidTreeView treeViev) {
+        public BaseNodeViewHolder<E> setTreeViev(AndroidTreeView treeViev) {
             this.tView = treeViev;
+            return this;
         }
 
         public AndroidTreeView getTreeView() {
             return tView;
         }
 
-        public void setContainerStyle(int style) {
+        public BaseNodeViewHolder<E> setContainerStyle(int style) {
             containerStyle = style;
+            return this;
         }
 
         public View getNodeView() {
@@ -273,12 +277,16 @@ public class TreeNode {
 
         public abstract View createNodeView(TreeNode node, E value);
 
-        public void toggle(boolean active) {
+        public BaseNodeViewHolder<E> toggle(boolean active) {
+            //TODO: ?
             // empty
+            return this;
         }
 
-        public void toggleSelectionMode(boolean editModeEnabled) {
+        public BaseNodeViewHolder<E> toggleSelectionMode(boolean editModeEnabled) {
+            //TODO: ?
             // empty
+            return this;
         }
     }
 }

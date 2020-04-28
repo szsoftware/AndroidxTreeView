@@ -39,7 +39,10 @@ public class PlaceHolderHolder extends TreeNode.BaseNodeViewHolder<PlaceHolderHo
     }
 
     @Override
-    public void toggle(boolean active) {
+    public PlaceHolderHolder toggle(boolean active) {
+        //TODO: ?
+        // empty
+        return this;
     }
 
 

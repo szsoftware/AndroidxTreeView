@@ -44,7 +44,10 @@ public class SocialViewHolder extends TreeNode.BaseNodeViewHolder<SocialViewHold
     }
 
     @Override
-    public void toggle(boolean active) {
+    public SocialViewHolder toggle(boolean active) {
+        //TODO: ??
+        // empty
+        return this;
     }
 
 

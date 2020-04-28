@@ -23,7 +23,9 @@ public class SimpleViewHolder extends TreeNode.BaseNodeViewHolder<Object> {
     }
 
     @Override
-    public void toggle(boolean active) {
-
+    public TreeNode.BaseNodeViewHolder<Object> toggle(boolean active) {
+        //TODO: ?
+        // empty
+        return this;
     }
 }

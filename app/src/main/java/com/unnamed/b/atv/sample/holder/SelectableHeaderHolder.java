@@ -55,13 +55,15 @@ public class SelectableHeaderHolder extends TreeNode.BaseNodeViewHolder<IconTree
     }
 
     @Override
-    public void toggle(boolean active) {
+    public SelectableHeaderHolder toggle(boolean active) {
         arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+        return this;
     }
 
     @Override
-    public void toggleSelectionMode(boolean editModeEnabled) {
+    public SelectableHeaderHolder toggleSelectionMode(boolean editModeEnabled) {
         nodeSelector.setVisibility(editModeEnabled ? View.VISIBLE : View.GONE);
         nodeSelector.setChecked(mNode.isSelected());
+        return this;
     }
 }

@@ -39,8 +39,9 @@ public class HeaderHolder extends TreeNode.BaseNodeViewHolder<IconTreeItemHolder
     }
 
     @Override
-    public void toggle(boolean active) {
+    public HeaderHolder toggle(boolean active) {
         arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+        return this;
     }
 
 

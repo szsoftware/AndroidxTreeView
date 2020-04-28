@@ -62,13 +62,15 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     }
 
     @Override
-    public void toggle(boolean active) {
+    public ArrowExpandSelectableHeaderHolder toggle(boolean active) {
         arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+        return this;
     }
 
     @Override
-    public void toggleSelectionMode(boolean editModeEnabled) {
+    public ArrowExpandSelectableHeaderHolder toggleSelectionMode(boolean editModeEnabled) {
         nodeSelector.setVisibility(editModeEnabled ? View.VISIBLE : View.GONE);
         nodeSelector.setChecked(mNode.isSelected());
+        return this;
     }
 }
